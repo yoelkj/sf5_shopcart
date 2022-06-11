@@ -1,4 +1,5 @@
 import { Controller } from "@hotwired/stimulus";
+import { useDispatch } from "stimulus-use";
 import Swal from 'sweetalert2';
 
 export default class extends Controller{
@@ -10,6 +11,13 @@ export default class extends Controller{
         confirmButton: String,
         submitAsync: Boolean
     };
+
+    connect(){
+        //useDispatch(this, {debug: true});
+        useDispatch(this);
+
+        //submit-confirm:async:submitted // optain this event with useDispatch and debug true
+    }
 
     onSubmit(event){
         event.preventDefault();
@@ -29,19 +37,24 @@ export default class extends Controller{
         })
     }
 
-    submitForm(){
+    async submitForm(){
         
         if (!this.submitAsyncValue) {
-            //Submit form
+            //Submit traditional form
             this.element.submit();
             return;
-        }else{
-            //Ajax submit form
-            return fetch(this.element.action, {
-                method: this.element.method,
-                body: new URLSearchParams(new FormData(this.element))
-            })
         }
+        
+        //Ajax submit form
+        const response = await fetch(this.element.action, {
+            method: this.element.method,
+            body: new URLSearchParams(new FormData(this.element))
+        })
+        
+
+        this.dispatch('async:submitted', {
+            response
+        });
         
     }
 
