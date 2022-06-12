@@ -65,11 +65,13 @@
 
         {% block body %}{% endblock %}
 
-        <div class="footer mb-0">
+        <div {{ stimulus_controller('made-with-love') }} class="footer mb-0">
+            {#
             Built with<span> &lt;3 </span>by your friends at
             <a href="https://symfonycasts.com" target="_blank">
                 SymfonyCasts
             </a>
+            #}
         </div>
     </body>
 </html>
