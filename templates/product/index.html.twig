@@ -32,19 +32,33 @@
                     </div>
                     <div class="col-9">
                         <form>
-                            <div class="input-group" {{stimulus_controller('search-preview', {url: path('app_homepage')})}}>
+                            <div class="input-group" 
+                                {{stimulus_controller({
+                                    'autocomplete': {
+                                        url: path('app_homepage', {preview: 1}),
+                                        skipHiddenProperty: true  
+                                    },
+                                    'autocomplete-transition': {}
+
+                                }) }}
+                                data-action="toggle->autocomplete-transition#toggle"
+                                >
+                                {#data-action="search-preview#onSearchInput"#}
                                 <input
                                     name="q"
                                     value="{{ searchTerm }}"
                                     placeholder="Search products..."
                                     type="search"
                                     class="form-control"
-                                    data-action="search-preview#onSearchInput"
+                                    
+                                    data-autocomplete-target="input"
                                 >
 
-                                <div class="search-preview"
-                                     data-search-preview-target="result"   
-                                ></div>
+                                {#data-search-preview-target="result"#}
+                                <div class="search-preview" 
+                                    data-autocomplete-target="results"
+                                    data-autocomplete-transition-target="results"
+                                    ></div>
                             </div>
                         </form>
                     </div>

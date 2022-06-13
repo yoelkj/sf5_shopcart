@@ -5,6 +5,13 @@
 {% block body %}
     <div class="container mt-4">
         <div class="row">
+
+            <div {{stimulus_controller('featured-product-react', {
+                 product: featuredProduct|serialize('json', {groups: 'product:read'})
+                 }
+            )}} class="col-sm">
+
+            </div>
             <div class="col-sm">
                 <h1>Register</h1>
 

@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Product index{% endblock %}
+
+{% block body %}
+<div data-action="modal-form:success->reload-content#refreshContent"  {{stimulus_controller('reload-content', {url: path('product_admin_index', {ajax: 1})})}} class="container-fluid mt-4">
+    <div class="d-flex flex-row">
+         <h1 class="me-3">Product index</h1>
+    
+        <div {{stimulus_controller('modal-form', {formUrl: path('product_admin_new')})}}
+        
+            data-action="hidden.bs.modal->modal-form#onHiddenModal">
+            <button data-action="modal-form#openMondal" class="btn btn-primary btn-sm">Add</button>
+        
+           {{ include('_modal.html.twig', {
+            modalTitle: 'Add a new product',
+            modalContent: ''
+           }) }}
+        </div>
+    </div>
+
+    <div data-reload-content-target="content">
+    {{ include('product_admin/_list.html.twig') }}
+    </div>
+
+    <a href="{{ path('product_admin_new') }}">Create new</a>
+</div>
+{% endblock %}
